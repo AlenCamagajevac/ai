@@ -1,13 +1,15 @@
-# Data Preparation  <!-- omit in toc -->
+# Data Preparation
 
 - Collection of features dealing with preparing raw data from Unreal Engine for input in various NNs
 - version 0.1.0
 
-## Table of Contents  <!-- omit in toc -->
+## Table of Contents
 
-- [How do I get set up](#how-do-i-get-set-up)
-- [Features](#features)
-  - [UE to COCO](#ue-to-coco)
+- [Data Preparation](#data-preparation)
+  - [Table of Contents](#table-of-contents)
+  - [How do I get set up](#how-do-i-get-set-up)
+  - [Features](#features)
+    - [UE to COCO](#ue-to-coco)
 
 ## How do I get set up
 
