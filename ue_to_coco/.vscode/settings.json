@@ -1,0 +1,5 @@
+{
+    "python.pythonPath": ".venv\\Scripts\\python.exe",
+    //"python.autoComplete.extraPaths": ["./path-to-your-code"],
+    "code-runner.executorMap": { "python": "$pythonPath -u $fullFileName" }
+}
