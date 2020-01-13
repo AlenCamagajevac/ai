@@ -9,7 +9,7 @@ json_name = "coco.json"
 
 # structure of the json
 json_dict = {
-    "info": 
+    "info":
     {
         "description": "UE Dataset",
         "url": "https://protostar.ai/",
@@ -30,6 +30,7 @@ json_dict = {
     "categories": []
 }
 
+
 def make_categories(ue_dict):
     """
     Create categories from processed UE data
@@ -42,7 +43,7 @@ def make_categories(ue_dict):
     list_categories = []
     list_cat_appeared = []
     counter_cat = 0
-    for data in ue_dict.values(): 
+    for data in ue_dict.values():
         for contours in data:
             category = contours[-1][1]
             if category not in list_cat_appeared:
@@ -57,6 +58,7 @@ def make_categories(ue_dict):
 
     return list_categories
 
+
 def make_images(ue_dict):
     """
     Create image data from processed UE data
@@ -67,7 +69,7 @@ def make_images(ue_dict):
         structure: [{}, {},...]
     """
     list_images = []
-    for image_id, image  in enumerate(ue_dict.keys()):
+    for image_id, image in enumerate(ue_dict.keys()):
         dict_image = {}
         modified_date = datetime.utcfromtimestamp(os.path.getmtime(image)).strftime('%Y-%m-%d %H:%M:%S')
         width, height = get_image_size.get_image_size(image)
@@ -81,8 +83,9 @@ def make_images(ue_dict):
         dict_image["id"] = image_id + 1
 
         list_images.append(dict_image)
-    
+
     return list_images
+
 
 def make_annotations(ue_dict):
     """
@@ -94,7 +97,7 @@ def make_annotations(ue_dict):
         structure: [{}, {},...]
     """
     list_annotations = []
-    for image_id, objects  in enumerate(ue_dict.values()):
+    for image_id, objects in enumerate(ue_dict.values()):
         for contours in objects:
             dict_contours = {}
             dict_contours["segmentation"] = []
@@ -105,12 +108,14 @@ def make_annotations(ue_dict):
             dict_contours["iscrowd"] = 0
             dict_contours["image_id"] = image_id + 1
             dict_contours["bbox"] = list(contours[-2])
-            dict_contours["category_id"] = next((item.get("id") for item in json_dict["categories"] if item["name"] == contours[-1][1]), 0)
+            dict_contours["category_id"] = next((item.get("id") for item in json_dict["categories"] if item["name"] ==
+                                                contours[-1][1]), 0)
             dict_contours["id"] = contours[-1][0]
 
             list_annotations.append(dict_contours)
 
     return list_annotations
+
 
 def main():
     """
@@ -120,13 +125,13 @@ def main():
     json_dict["categories"] = make_categories(ue_dict)
     json_dict["images"] = make_images(ue_dict)
     json_dict["annotations"] = make_annotations(ue_dict)
-    
-    #print(json.dumps(json_dict))
+
+    # print(json.dumps(json_dict))
 
     with open(ue.metadata_filelocation + json_name, 'w') as outfile:
         json.dump(json_dict, outfile)
-    
+
     print(f"Exported segmentation json file in COCO format to {ue.metadata_filelocation + json_name}")
 
-main()
 
+main()
