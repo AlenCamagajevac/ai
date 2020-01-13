@@ -4,8 +4,9 @@ import cv2
 import numpy as np
 import glob
 
-metadata_filelocation = ".\\Metadata\\"
-image_filelocation = ".\\Screenshots\\"
+metadata_filelocation = ".\\ue_to_coco\\Metadata\\"
+images_filelocation = ".\\ue_to_coco\\Images\\"
+masks_filelocation = ".\\ue_to_coco\\Masks\\"
 metadata_filename = "Segmentation.csv"
 metadata_delimiter = "-"
 segmentation_filename_ext = "_s"
@@ -50,9 +51,9 @@ def get_polygons(image_name, dict_colours):
     """
     list_poly = []
 
-    # load the flat coloured image
-    image_flat_name = "." + image_name.split(".")[1] + segmentation_filename_ext + "." + image_name.split(".")[2]
-    image_flat = cv2.imread(image_flat_name)
+    # load the flat coloured mask image
+    mask_name = masks_filelocation + image_name.split(".")[1].split("\\")[-1] + segmentation_filename_ext + "." + image_name.split(".")[2]
+    mask = cv2.imread(mask_name)
 
     # process all colours to find the contours and bounding boxes
     for colour in dict_colours.keys():
@@ -68,7 +69,7 @@ def get_polygons(image_name, dict_colours):
         upper = np.array(upper, dtype = "uint8")
 
         # find the colours within the specified boundaries and apply the mask
-        object_mask = cv2.inRange(image_flat, lower, upper)
+        object_mask = cv2.inRange(mask, lower, upper)
         #isolated_object = cv2.bitwise_and(image_flat, image_flat, mask = object_mask)
 
         # get contours using point approximation
@@ -126,8 +127,8 @@ def get_segmentation():
     # key = colour; values = id, category
     dict_colours = get_colours()
 
-    # get all images file names excluding the the segmentation ones ending wih "_s"
-    images = [f for f in glob.glob(image_filelocation + f"*[!{segmentation_filename_ext}].png")]
+    # get all image file names excluding the the segmentation ones ending wih "_s"
+    images = [f for f in glob.glob(images_filelocation + f"*[!{segmentation_filename_ext}].png")]
 
     for image in images:
         list_poly = get_polygons(image, dict_colours)

@@ -5,7 +5,7 @@ import get_image_size
 import json
 
 # file save name
-json_name = "coco_json.json"
+json_name = "coco.json"
 
 # structure of the json
 json_dict = {
