@@ -1,29 +1,26 @@
-# README #
+# AI
 
-This README would normally document whatever steps are necessary to get your application up and running.
+- Section dealing with AI and image processing
+- version 0.0.0
 
-### What is this repository for? ###
+## Table of Contents
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+- [AI](#ai)
+  - [Table of Contents](#table-of-contents)
+  - [How do I get set up](#how-do-i-get-set-up)
+  - [Subsections](#subsections)
+    - [Data Preparation](#data-preparation)
 
-### How do I get set up? ###
+## How do I get set up
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
+- Ideally every subsection has it's own python virtual environment that can be downloaded and run withouth the need to install aditional dependecies
+- Dependencies alongside python interpreter are located in `.venv` virtual environment
+- To run, set python from venv in VS Code as the interpreter
 
-### Contribution guidelines ###
+## Subsections
 
-* Writing tests
-* Code review
-* Other guidelines
+> Aditional description of the script functionalities can be found in README files of every subsection
 
-### Who do I talk to? ###
+### Data Preparation
 
-* Repo owner or admin
-* Other community or team contact
+- Subsection dealing with data preparation from Unreal Engine for input into various NNs
