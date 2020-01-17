@@ -9,7 +9,8 @@
   - [Table of Contents](#table-of-contents)
   - [How do I get set up](#how-do-i-get-set-up)
   - [Features](#features)
-    - [UE to COCO](#ue-to-coco)
+    - [UE to COCO dataset](#ue-to-coco-dataset)
+    - [UE to U-Net](#ue-to-u-net)
 
 ## How do I get set up
 
@@ -18,7 +19,11 @@
 
 ## Features
 
-### UE to COCO
+### UE to COCO dataset
 
 - These scripts convert images located in `Screenshots` togehter with data from Unreal Engine located in `Metadata\Segmentation.csv` into a json file compatible with COCO dataset format for NN training
 - Output is saved in `Metadata\coco_json.json`
+
+### UE to U-Net
+
+- U-Net requires just binary images (black and white) of the segmented scene
