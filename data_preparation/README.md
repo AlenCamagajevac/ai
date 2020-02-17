@@ -14,17 +14,17 @@
 
 ## How do I get set up
 
-1. Install Anaconda environment with: 
+- Install Anaconda environment with: 
 > `conda env create -f env_dataprep.yml`
 
 or if already existing update it with: 
 > `conda env update --prefix ./env --file env_dataprep.yml  --prune`
 
-2. To run, set python interpreter to be the one located in Anaconda virtual environment
+- To run, set python interpreter to be the one located in Anaconda virtual environment
 
 > for VS Code: `F1 > Python: Select Interpreter > Python *version* ('dataprep':conda)`
 
-3. Run:
+- Run:
 
 > `conda activate dataprep`
 
