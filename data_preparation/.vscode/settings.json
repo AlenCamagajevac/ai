@@ -1,17 +1,9 @@
 {
-    "python.pythonPath": ".venv\\Scripts\\python.exe",
-    "python.autoComplete.extraPaths": [
-
-        "${workspaceFolder}\\ue_to_coco"
-    ],
-    "code-runner.executorMap": {
-        "python": "$pythonPath -u $fullFileName"
-    },
-    "python.linting.pylintEnabled": false,
-    "python.linting.enabled": true,
-    "python.linting.flake8Enabled": true,
-    "python.linting.pylintArgs": ["--generate-members"],
     "python.linting.flake8Args": [
         "--max-line-length=120",
-    ]
+    ],
+    "git.ignoreLimitWarning": true,
+    "python.linting.enabled": true,
+    "python.linting.pylintEnabled": false,
+    "python.linting.flake8Enabled": true
 }

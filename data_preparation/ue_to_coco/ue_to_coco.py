@@ -1,11 +1,14 @@
 from datetime import datetime
 import ue_segmentation as ue
 import os
-import get_image_size
+import imagesize
 import json
 
 # file save name
-json_name = "coco.json"
+json_name_base = "_coco.json"
+
+image_folders = [os.path.join("ue_to_coco", "Images", "train"),
+                 os.path.join("ue_to_coco", "Images", "val")]
 
 # structure of the json
 json_dict = {
@@ -49,10 +52,10 @@ def make_categories(ue_dict):
             if category not in list_cat_appeared:
                 dict_category = {}
                 list_cat_appeared.append(category)
-                counter_cat += 1
                 dict_category["supercategory"] = "object"
                 dict_category["id"] = counter_cat
                 dict_category["name"] = category
+                counter_cat += 1
 
                 list_categories.append(dict_category)
 
@@ -72,9 +75,10 @@ def make_images(ue_dict):
     for image_id, image in enumerate(ue_dict.keys()):
         dict_image = {}
         modified_date = datetime.utcfromtimestamp(os.path.getmtime(image)).strftime('%Y-%m-%d %H:%M:%S')
-        width, height = get_image_size.get_image_size(image)
+        # width, height = get_image_size.get_image_size(image)
+        width, height = imagesize.get(image)
         dict_image["licence"] = 1
-        dict_image["file_name"] = image.split("\\")[-1]
+        dict_image["file_name"] = os.path.basename(image)
         dict_image["coco_url"] = ""
         dict_image["height"] = height
         dict_image["width"] = width
@@ -97,6 +101,7 @@ def make_annotations(ue_dict):
         structure: [{}, {},...]
     """
     list_annotations = []
+    ann_counter = 1
     for image_id, objects in enumerate(ue_dict.values()):
         for contours in objects:
             dict_contours = {}
@@ -110,7 +115,8 @@ def make_annotations(ue_dict):
             dict_contours["bbox"] = list(contours[-2])
             dict_contours["category_id"] = next((item.get("id") for item in json_dict["categories"] if item["name"] ==
                                                 contours[-1][1]), 0)
-            dict_contours["id"] = contours[-1][0]
+            dict_contours["id"] = ann_counter  # contours[-1][0]
+            ann_counter += 1
 
             list_annotations.append(dict_contours)
 
@@ -121,17 +127,19 @@ def main():
     """
     Create json in COCO format for all images
     """
-    ue_dict = ue.get_segmentation()
-    json_dict["categories"] = make_categories(ue_dict)
-    json_dict["images"] = make_images(ue_dict)
-    json_dict["annotations"] = make_annotations(ue_dict)
 
-    # print(json.dumps(json_dict))
+    for path in image_folders:
+        ue_dict = ue.get_segmentation(path)
+        json_dict["categories"] = make_categories(ue_dict)
+        json_dict["images"] = make_images(ue_dict)
+        json_dict["annotations"] = make_annotations(ue_dict)
 
-    with open(ue.metadata_filelocation + json_name, 'w') as outfile:
-        json.dump(json_dict, outfile)
+        # print(json.dumps(json_dict))
+        json_name = os.path.basename(path) + json_name_base
+        with open(os.path.join(ue.metadata_folder, json_name), 'w') as outfile:
+            json.dump(json_dict, outfile)
 
-    print(f"Exported segmentation json file in COCO format to {ue.metadata_filelocation + json_name}")
+        print(f"Exported segmentation json file in COCO format to {os.path.join(ue.metadata_folder, json_name)}")
 
 
 main()

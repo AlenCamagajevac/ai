@@ -13,9 +13,20 @@
 
 ## How do I get set up
 
-- Ideally every subsection has it's own python virtual environment that can be downloaded and run withouth the need to install aditional dependecies
-- Dependencies alongside python interpreter are located in `.venv` virtual environment
-- To run, set python from venv in VS Code as the interpreter
+- Ideally every subsection has it's own python virtual environment
+- Install Anaconda environment with: 
+> `conda env create -f *environment_name*.yml`
+
+or if already existing update it with: 
+> `conda env update --prefix ./env --file *environment_name*.yml  --prune`
+
+- To run, set python interpreter to be the one located in Anaconda virtual environment
+
+> for VS Code: `F1 > Python: Select Interpreter > Python *version* ('*environment_name*':conda)`
+
+- Run:
+
+> `conda activate *environment_name*`
 
 ## Subsections
 

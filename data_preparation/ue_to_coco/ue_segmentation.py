@@ -1,15 +1,16 @@
 import csv
 import math
-from cv2 import cv2
+import cv2
 import numpy as np
 import glob
+import os
 
-metadata_folder = ".\\ue_to_coco\\Metadata\\"
-images_folder = ".\\ue_to_coco\\Images\\"
-masks_folder = ".\\ue_to_coco\\Masks\\"
+metadata_folder = os.path.join("ue_to_coco", "Metadata")
+masks_folder = os.path.join("ue_to_coco", "Masks")
 metadata_name = "Segmentation.csv"
 metadata_delimiter = "-"
 segmentation_name_ext = "_s"
+img_extension = ".png"
 
 
 def get_colours():
@@ -24,7 +25,7 @@ def get_colours():
     dict_colours = {}
 
     # open metadata file and save structure to dict_colours
-    with open(metadata_folder + metadata_name) as csv_file:
+    with open(os.path.join(metadata_folder, metadata_name)) as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=metadata_delimiter)
         line_count = 0
         for row in csv_reader:
@@ -54,8 +55,8 @@ def get_polygons(image_name, dict_colours):
     list_poly = []
 
     # load the flat coloured mask image
-    mask_name = masks_folder + image_name.split(".")[1].split("\\")[-1] + segmentation_name_ext + "." +\
-        image_name.split(".")[2]
+    image_base_name, image_ext = os.path.splitext(os.path.basename(image_name))
+    mask_name = os.path.join(masks_folder, image_base_name + segmentation_name_ext + image_ext)
     mask = cv2.imread(mask_name)
 
     # process all colours to find the contours and bounding boxes
@@ -74,6 +75,8 @@ def get_polygons(image_name, dict_colours):
         # find the colours within the specified boundaries and apply the mask
         object_mask = cv2.inRange(mask, lower, upper)
         # isolated_object = cv2.bitwise_and(image_flat, image_flat, mask = object_mask)
+        # cv2.imshow('segmented_image', mask)
+        # cv2.waitKey()
 
         # get contours using point approximation
         countours = cv2.findContours(object_mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_TC89_KCOS)
@@ -111,7 +114,7 @@ def get_polygons(image_name, dict_colours):
                 if bbox[1] + bbox[3] > y_max:
                     y_max = bbox[1] + bbox[3]
 
-            bbox_full = (x_min, y_min, x_max - x_min, y_max - y_min)
+            bbox_full = (x_min, y_min, x_max - x_min, y_max - y_min)  # X0, Y0, Xsize, Ysize
             list_contours.append(bbox_full)
             list_contours.append(dict_colours[colour] + (contour_area,))
             list_poly.append(list_contours)
@@ -119,10 +122,11 @@ def get_polygons(image_name, dict_colours):
     return list_poly
 
 
-def get_segmentation():
+def get_segmentation(images_folder):
     """
     Get segmentation data for all images in a folder
 
+    :param string images_folder: path to the folder of images to process (ex. /data/train/)
     :return dict_segmentation: dictionary of polygon points for each object on the image as well as
         it's bounding box, object id, category and contour total area, if the the object is
         split into multiple areas, each of them has a new list with polygon points
@@ -136,7 +140,7 @@ def get_segmentation():
     dict_colours = get_colours()
 
     # get all image file names excluding the the segmentation ones ending wih "_s"
-    images = [f for f in glob.glob(images_folder + f"*[!{segmentation_name_ext}].png")]
+    images = [f for f in glob.glob(os.path.join(images_folder, f"*[!{segmentation_name_ext}]" + img_extension))]
 
     for image in images:
         list_poly = get_polygons(image, dict_colours)
@@ -173,6 +177,9 @@ def debug_draw(dict_segmentation, image_index):
 
 
 def main():
-    debug_draw(get_segmentation(), 0)
+    debug_draw(get_segmentation(os.path.join("ue_to_coco", "Images", "val")), 0)
 
-# main()
+
+if __name__ == "__main__":
+    # execute only if run as a script
+    main()
