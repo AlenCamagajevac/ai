@@ -5,8 +5,8 @@ import numpy as np
 import glob
 import os
 
-metadata_folder = os.path.join("data_preparation", "ue_to_coco", "Metadata")
-masks_folder = os.path.join("data_preparation", "ue_to_coco", "Masks")
+metadata_folder = os.path.join("ue_to_coco", "Metadata")
+masks_folder = os.path.join("ue_to_coco", "Masks")
 metadata_name = "Segmentation.csv"
 metadata_delimiter = "-"
 segmentation_name_ext = "_s"
@@ -177,7 +177,7 @@ def debug_draw(dict_segmentation, image_index):
 
 
 def main():
-    debug_draw(get_segmentation(os.path.join("data_preparation", "ue_to_coco", "Images", "val")), 0)
+    debug_draw(get_segmentation(os.path.join("ue_to_coco", "Images", "val")), 0)
 
 
 if __name__ == "__main__":

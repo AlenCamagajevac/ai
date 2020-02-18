@@ -7,8 +7,8 @@ import json
 # file save name
 json_name_base = "_coco.json"
 
-image_folders = [os.path.join("data_preparation", "ue_to_coco", "Images", "train"),
-                 os.path.join("data_preparation", "ue_to_coco", "Images", "val")]
+image_folders = [os.path.join("ue_to_coco", "Images", "train"),
+                 os.path.join("ue_to_coco", "Images", "val")]
 
 # structure of the json
 json_dict = {
