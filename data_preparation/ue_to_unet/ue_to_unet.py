@@ -2,9 +2,9 @@ from cv2 import cv2
 import glob
 import os
 
-images_folder = os.path.join("ue_to_unet", "Images")
-masks_folder = os.path.join("ue_to_unet", "Masks")
-masks_binary_folder = os.path.join("ue_to_unet", "MasksBinary")
+images_folder = os.path.join("data_preparation", "ue_to_unet", "Images")
+masks_folder = os.path.join("data_preparation", "ue_to_unet", "Masks")
+masks_binary_folder = os.path.join("data_preparation", "ue_to_unet", "MasksBinary")
 segmentation_name_ext = "_s"
 
 
