@@ -10,23 +10,22 @@
   - [How do I get set up](#how-do-i-get-set-up)
   - [Subsections](#subsections)
     - [Data Preparation](#data-preparation)
+    - [PyTorch](#pytorch)
 
 ## How do I get set up
 
 - Ideally every subsection has it's own python virtual environment
-- Install Anaconda environment with: 
-> `conda env create -f *environment_name*.yml`
+- Install Anaconda environment with:
+  > `conda env create -f *environment_name*.yml`
 
-or if already existing update it with: 
-> `conda env update --prefix ./env --file *environment_name*.yml  --prune`
+- or if already existing update it with:
+  > `conda env update --prefix ./env --file *environment_name*.yml  --prune`
 
 - To run, set python interpreter to be the one located in Anaconda virtual environment
-
-> for VS Code: `F1 > Python: Select Interpreter > Python *version* ('*environment_name*':conda)`
+  > for VS Code: `F1 > Python: Select Interpreter > Python *version* ('*environment_name*':conda)`
 
 - Run:
-
-> `conda activate *environment_name*`
+  > `conda activate *environment_name*`
 
 ## Subsections
 
@@ -35,3 +34,7 @@ or if already existing update it with:
 ### Data Preparation
 
 - Subsection dealing with data preparation from Unreal Engine for input into various NNs
+
+### PyTorch
+
+- Subsection dealing with PyTorch for neural network training
