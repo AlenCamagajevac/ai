@@ -18,7 +18,7 @@
 - Install Anaconda environment with:
   > `conda env create -f *environment_name*.yml`
 
-  or if already existing update it with:
+- or if already existing update it with:
   > `conda env update --prefix ./env --file *environment_name*.yml  --prune`
 
 - To run, set python interpreter to be the one located in Anaconda virtual environment

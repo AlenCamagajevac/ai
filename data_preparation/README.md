@@ -17,7 +17,7 @@
 - Install Anaconda environment with:
   > `conda env create -f env_dataprep.yml`
 
-  or if already existing update it with:
+- or if already existing update it with:
   > `conda env update --prefix ./env --file env_dataprep.yml  --prune`
 
 - To run, set python interpreter to be the one located in Anaconda virtual environment
